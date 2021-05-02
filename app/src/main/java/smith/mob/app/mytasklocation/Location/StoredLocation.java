@@ -4,9 +4,14 @@ import com.google.firebase.firestore.PropertyName;
 
 import java.io.Serializable;
 
+/**
+ * Class which creates a location object to be stored in Firestore
+ * @author William Smith & Christopher Bowers (Bowers, 2021)
+ * @version 02/05/2021
+ */
 public class StoredLocation implements Serializable
 {
-    //// FIELD VARIABLES
+    //--------------------FIELD VARIABLES--------------------//
 
     // DECLARE a String, name it '_locName':
     private String _locName;
@@ -27,14 +32,26 @@ public class StoredLocation implements Serializable
     private boolean _notificationRequired;
 
 
-    // CONSTRUCTORS
+    //--------------------CONSTRUCTORS--------------------//
 
+    /**
+     * Constructor for objects of type StoredLocation
+     */
     public StoredLocation()
     {
         // NOT USED, Only declared as Firebase Firestore cannot deserialise
         // StoredLocation without a no argument constructor
     }
 
+    /**
+     * CONSTURCTOR: Creates an object of type StoredLocation
+     * @param locName: name of user's location
+     * @param latitude: latitude of user's location
+     * @param longitude: longitude of user's location
+     * @param userID: current user's unique ID
+     *
+     * Learned from Worksheet 9 (Bowers, 2021)
+     */
     public StoredLocation(String locName, double latitude, double longitude, String userID)
     {
         // SET value of _locName as locName:
@@ -56,8 +73,12 @@ public class StoredLocation implements Serializable
         _notificationRequired = true;
     }
 
-    //// GET METHODS
+    //--------------------PUBLIC METHODS--------------------//
 
+    /**
+     * METHOD: Get current value of _locName and return to caller
+     * @return _locName: value of _locName
+     */
     @PropertyName("_locName")
     public String getLocName()
     {
@@ -65,6 +86,10 @@ public class StoredLocation implements Serializable
         return _locName;
     }
 
+    /**
+     * METHOD: Get current value of _userID and return to caller
+     * @return _userID: value of _userID
+     */
     @PropertyName("_userID")
     public String getUserID()
     {
@@ -72,6 +97,10 @@ public class StoredLocation implements Serializable
         return _userID;
     }
 
+    /**
+     * METHOD: Get current value of _notificationActive and return to caller
+     * @return _notificationActive: value of _notificationActive
+     */
     @PropertyName("_notificationActive")
     public boolean getNotificationActive()
     {
@@ -79,6 +108,10 @@ public class StoredLocation implements Serializable
         return _notificationActive;
     }
 
+    /**
+     * METHOD: Get current value of _notificationRequired and return to caller
+     * @return _notificationRequired: value of _notificationRequired
+     */
     @PropertyName("_notificationRequired")
     public boolean getNotificationRequired()
     {
@@ -86,6 +119,10 @@ public class StoredLocation implements Serializable
         return _notificationRequired;
     }
 
+    /**
+     * METHOD: Get current value of _latitude and return to caller
+     * @return _latitude: value of _latitude
+     */
     @PropertyName("_latitude")
     public double getLatitude()
     {
@@ -93,6 +130,10 @@ public class StoredLocation implements Serializable
         return _latitude;
     }
 
+    /**
+     * METHOD: Get current value of _longitude and return to caller
+     * @return _longitude: value of_longitude
+     */
     @PropertyName("_longitude")
     public double getLongitude()
     {
@@ -100,8 +141,10 @@ public class StoredLocation implements Serializable
         return _longitude;
     }
 
-    //// SET METHODS
-
+    /**
+     * METHOD: Set value of _notificationActive to incoming value
+     * @param bool: incoming value from caller of method
+     */
     @PropertyName("_notificationActive")
     public void setNotificationActive(boolean bool)
     {
@@ -109,6 +152,10 @@ public class StoredLocation implements Serializable
         _notificationActive = bool;
     }
 
+    /**
+     * METHOD: Set value of _notificationRequired to incoming value
+     * @param bool: incoming value from caller of method
+     */
     @PropertyName("_notificationRequired")
     public void setNotificationRequired(boolean bool)
     {

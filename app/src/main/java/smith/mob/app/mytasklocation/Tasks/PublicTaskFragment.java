@@ -17,16 +17,15 @@ import java.util.List;
 import smith.mob.app.mytasklocation.R;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link CompletedTaskFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Class which creates a fragment that displays Public tasks in TasksDB
+ * @author William Smith & Christopher Bowers (Bowers 2021)
+ * @version 02/05/2021
  */
-public class CompletedTaskFragment extends Fragment
+public class PublicTaskFragment extends Fragment
 {
+    //--------------------CUSTOM CODE--------------------//
 
-    //// CUSTOM CODE
-
-    //// FIELD VARIABLES
+    //------------------FIELD VARIABLES--------------------//
 
     // DECLARE a RecyclerView, call it '_recyclerView':
     RecyclerView _recyclerView;
@@ -38,8 +37,15 @@ public class CompletedTaskFragment extends Fragment
     TasksDB _db;
 
 
-    //// OVERRIDE METHODS
+    //--------------------OVERRIDE METHODS--------------------//
 
+    /**
+     * METHOD: Called when PublicTasksFragment view is displayed on screen
+     * @param view: Gets reference to fragment view from activity XML
+     * @param savedInstanceState: Used to restore user back to previous state in event of error when changing activity
+     *
+     * Learned from Worksheet 7 (Bowers, 2021)
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
@@ -90,13 +96,17 @@ public class CompletedTaskFragment extends Fragment
         _itemTouchHelper.attachToRecyclerView(_recyclerView);
     }
 
-
+    /**
+     * METHOD: Called constantly when class is in use by an activity
+     *
+     * Learned from Worksheet 7 (Bowers, 2021)
+     */
     @Override
     public void onResume()
     {
         super.onResume();
 
-        // Retrieves COMPLETED tasks stored in Database
+        // Retrieves Public tasks stored in Database
         LiveData<List<Task>> _tasks = _db.tasksDAO().getPublic();
 
         // OBSERVE the LiveData object, wait for modification
@@ -116,9 +126,9 @@ public class CompletedTaskFragment extends Fragment
 
 
 
-    //// BOILER PLATE CODE
+    //--------------------BOILER PLATE CODE--------------------//
 
-    //// FIELD VARIABLES
+    //--------------------FIELD VARIABLES--------------------//
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -129,7 +139,7 @@ public class CompletedTaskFragment extends Fragment
     private String mParam1;
     private String mParam2;
 
-    public CompletedTaskFragment() {
+    public PublicTaskFragment() {
         // Required empty public constructor
     }
 
@@ -142,8 +152,8 @@ public class CompletedTaskFragment extends Fragment
      * @return A new instance of fragment CompletedTaskFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CompletedTaskFragment newInstance(String param1, String param2) {
-        CompletedTaskFragment fragment = new CompletedTaskFragment();
+    public static PublicTaskFragment newInstance(String param1, String param2) {
+        PublicTaskFragment fragment = new PublicTaskFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

@@ -17,16 +17,25 @@ import java.util.List;
 
 import smith.mob.app.mytasklocation.R;
 
+/**
+ * Class used to display Main Menu screen once a user has signed into Firebase
+ * @author William Smith & Google (Google, 2021)
+ * @version 02/05/2021
+ */
 public class SignInActivity extends AppCompatActivity
 {
-    //// FIELD VARIABLES
+    //--------------------FIELD VARIABLES--------------------//
 
     // DECLARE an int, name it '_signInCode':
     private final int _signInCode = 123;
 
 
-    //// OVERRIDE METHODS
+    //--------------------OVERRIDE METHODS--------------------//
 
+    /**
+     * METHOD: Called when class is first loaded to initialise objects
+     * @param savedInstanceState: Used to restore user back to previous state in event of error when changing activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -40,6 +49,9 @@ public class SignInActivity extends AppCompatActivity
         setContentView(R.layout.activity_sign_in);
     }
 
+    /**
+     * METHOD: Called constantly when class is in use by an activity
+     */
     @Override
     protected void onResume()
     {
@@ -50,28 +62,40 @@ public class SignInActivity extends AppCompatActivity
         checkUserStatus();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    //--------------------PUBLIC METHODS--------------------//
+
+    /**
+     * METHOD: Opens Firebase UI sign in, allows user to sign in into Firestore
+     * @param view: Allows use of method from exterior view object
+     *
+     * Learned from Firebase Documentation (Google, 2021)
+     */
+    public void createSignInIntent(View view)
     {
-        // CALL onActivityResult from superclass, passing two ints and an Intent as parameters:
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == _signInCode) // IF requestCode
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) // IF user IS NOT signed in, double check to make sure
         {
-            // DECLARE & ASSIGN an IdpResponse, name it '_response', give value of Intent:
-            IdpResponse response = IdpResponse.fromResultIntent(data);
+            // DECLARE a List<AuthUI.IdpConfig>, name it '_providers':
+            List<AuthUI.IdpConfig> _providers = Arrays.asList(
+                    // BUILD Config for Email Sign in:
+                    new AuthUI.IdpConfig.EmailBuilder().build());
 
-            if (resultCode == RESULT_OK) // IF user has signed in successfully
-            {
-                // DECLARE a FirebaseUser, name it 'user':
-                FirebaseUser _user = FirebaseAuth.getInstance().getCurrentUser();
-            }
+            // CALL startActivityForResult() to launch sign-in intent, passing an instance of AuthUI and _signInCode as parameters:
+            startActivityForResult(
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(_providers)
+                            .setTheme(R.style.Theme_MyTaskLocation)
+                            .setIsSmartLockEnabled(false)
+                            .build(),
+                    _signInCode);
         }
     }
 
+    //--------------------PRIVATE METHODS--------------------//
 
-    //// PRIVATE METHODS
-
+    /**
+     * METHOD: Called to check if User has signed into Firebase, if they have change activity
+     */
     private void checkUserStatus()
     {
         if (FirebaseAuth.getInstance().getCurrentUser() != null) // IF user IS signed in
@@ -79,35 +103,11 @@ public class SignInActivity extends AppCompatActivity
             // CALL goToMainActivity() to allow user to access app:
             goToMainActivity();
         }
-        /*else if (FirebaseAuth.getInstance().getCurrentUser() == null) // IF user IS NOT signed in
-        {
-            // CALL createSignInIntent() to allow user to sign in:
-            createSignInIntent();
-        }*/
     }
 
-    // Opens Firebase Auth UI to allow user to sign in
-    public void createSignInIntent(View view)
-    {
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) // IF user IS NOT signed in, double check to make sure
-        {
-            // DECLARE a List<AuthUI.IdpConfig>, name it '_providers':
-            List<AuthUI.IdpConfig> _providers = Arrays.asList(
-                   // BUILD Config for Email Sign in:
-                   new AuthUI.IdpConfig.EmailBuilder().build());
-
-            // CALL startActivityForResult() to launch sign-in intent, passing an instance of AuthUI and _signInCode as parameters:
-            startActivityForResult(
-                    AuthUI.getInstance()
-                           .createSignInIntentBuilder()
-                           .setAvailableProviders(_providers)
-                           .setTheme(R.style.Theme_MyTaskLocation)
-                           .setIsSmartLockEnabled(false)
-                           .build(),
-                    _signInCode);
-        }
-    }
-
+    /**
+     * METHOD: Opens MainMenuActivity to allow user to access app features
+     */
     public void goToMainActivity()
     {
         // Log to test button functionality
@@ -115,6 +115,8 @@ public class SignInActivity extends AppCompatActivity
 
         // DECLARE an Intent, name it '_mainActIntent', starts MainMenuActivity:
         Intent _mainActIntent = new Intent(this, MainMenuActivity.class);
+
+        // Call startActivity(), passing an Intent as a parameter:
         startActivity(_mainActIntent);
     }
 }

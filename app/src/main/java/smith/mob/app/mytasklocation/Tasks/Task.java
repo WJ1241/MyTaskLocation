@@ -6,9 +6,16 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+/**
+ * Class which creates a task object to be stored in local Room database and Firestore
+ * @author William Smith & Christopher Bowers (Bowers, 2021)
+ * @version 02/05/2021
+ */
 @Entity
 public class Task implements Serializable
 {
+    //--------------------FIELD VARIABLES--------------------//
+
     @PrimaryKey(autoGenerate = true)
     // DECLARE an int, name it 'uid':
     public int uid;
@@ -53,15 +60,27 @@ public class Task implements Serializable
     // DECLARE an boolean, name it 'notificationsRequired':
     public boolean notificationRequired;
 
+    //--------------------CONSTRUCTORS--------------------//
 
-    // CONSTRUCTOR - Used for Room:
+    /**
+     * Constructor for objects of type Task
+     */
     public Task()
     {
 
     }
 
 
-    // CONSTRUCTOR - Used for Firebase:
+    /**
+     * Constructor for objects of type Task
+     * @param title: title of task
+     * @param description: description of task
+     * @param locName: name of task's location
+     * @param longitude: longitude of task's location
+     * @param latitude: latitude of task's location
+     * @param image: image of task's location
+     * @param userID: current user's unique ID
+     */
     public Task(String title, String description, String locName, double longitude, double latitude, String image, String userID)
     {
         // SET value of this.title as title:

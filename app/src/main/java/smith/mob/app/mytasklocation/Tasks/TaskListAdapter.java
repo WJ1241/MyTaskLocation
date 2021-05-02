@@ -24,9 +24,14 @@ import java.util.concurrent.Executors;
 
 import smith.mob.app.mytasklocation.R;
 
+/**
+ * Class which allows modification to tasks stored in local Room Database
+ * @author William Smith, Christopher Bowers (Bowers, 2021) & Google (Google, 2021)
+ * @version 02/05/2021
+ */
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder>
 {
-    //--------------------Instance Variables--------------------//
+    //--------------------FIELD VARIABLES--------------------//
 
     // DECLARE a reference to the Task class as a List, call it 'tasks'
     private List<Task> _tasks;
@@ -43,8 +48,13 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     private String _crrntUser;
 
 
-    //--------------------ViewHolder--------------------//
+    //--------------------VIEWHOLDER CLASS--------------------//
 
+    /**
+     * Class which holds refernce to views in recycler view in XML
+     * @author William Smith, Christopher Bowers (Bowers, 2021)
+     * @version 02/05/2021
+     */
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         // DECLARE text, image and checkbox views:
@@ -54,6 +64,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         ImageView _imageView;
         CheckBox _checkBox;
 
+        //---------------VIEWHOLDER CONSTRUCTOR--------------//
+
+        /**
+         * Constructor for objects of type ViewHolder
+         * @param itemView: Holds reference to exterior XML view objects
+         */
         public ViewHolder(@NonNull View itemView)
         {
             // Pass View as a parameter through superclass constructor:
@@ -74,8 +90,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         }
     }
 
-    //--------------------METHODS--------------------//
+    //--------------------PUBLIC METHODS--------------------//
 
+    /**
+     * METHOD: Sets Task list in Adapter class to same list in Room Database
+     * @param tasks: holds reference to list of all tasks
+     *
+     *  Learned from Worksheet 6 (Bowers, 2021)
+     */
     public void setTaskList(List<Task> tasks)
     {
         // SET value of _tasks to tasks:
@@ -85,6 +107,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         notifyDataSetChanged();
     }
 
+    /**
+     * METHOD: Sets instance of Database in Adapter class to TasksDB object
+     * @param db: holds reference to TasksDB object
+     *
+     *  Learned from Worksheet 6 (Bowers, 2021)
+     */
     public void setDatabase(TasksDB db)
     {
         // SET value of _db to db:
@@ -94,6 +122,13 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         notifyDataSetChanged();
     }
 
+    /**
+     * METHOD: Deletes task from local Room Database and Firestore
+     * @param position: position of current task listed in Fragment view
+     *
+     * Learned from Worksheet 6 (Bowers, 2021)
+     * Learned from Firebase Documentation (Google, 2021)
+     */
     public void deleteTask(int position)
     {
         // DECLARE a final Task, call it '_task', used to get specified location in task list:
@@ -112,7 +147,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                    // CALL delete method from TasksDAO interface:
                    _db.tasksDAO().deleteTask(_task);
 
-                   // CALL delete method from Firebase Firestore on selected task:
+                   // CALL delete method from Firebase Firestore on selected task (Google, 2021):
                    _fsDb.collection("tasks").document(_task.title + "_" + _crrntUser)
                            .delete()
                            .addOnSuccessListener(new OnSuccessListener<Void>()
@@ -140,6 +175,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
     //--------------------OVERRIDE METHODS--------------------//
 
+    /**
+     * METHOD: Inflates a layout to be used in a ViewHolder and returns to caller
+     * @param parent: parent of all of views in a group
+     * @param viewType: The type of view being passed using unique ID
+     * @return View: Inflated layout to be used to hold tasks
+     *
+     * Learned from Worksheet 6 (Bowers, 2021)
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
@@ -154,6 +197,13 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         return new ViewHolder(_view);
     }
 
+    /**
+     * METHOD: Updates task in local Room Database and Firestore
+     * @param holder: identification of which ViewhHolder object is being affected
+     * @param position: position of task on screen to be modified
+     *
+     * Learned from Worksheet 6 (Bowers, 2021)
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
@@ -201,6 +251,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         });
     }
 
+    /**
+     * METHOD: Returns a value of how many tasks are stored locally in Room database
+     * @return _tasks.size(): returns how many task objects are in Room database list
+     *
+     * Learned from Worksheet 6 (Bowers, 2021)
+     */
     @Override
     public int getItemCount()
     {

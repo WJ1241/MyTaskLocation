@@ -53,9 +53,14 @@ import smith.mob.app.mytasklocation.R;
 import smith.mob.app.mytasklocation.Tasks.Task;
 import smith.mob.app.mytasklocation.Tasks.TasksDB;
 
+/**
+ * Class which creates an activity to display a user's current location
+ * @author William Smith, Christopher Bowers (Bowers, 2021), CodingInFlow (CodingInFlow, 2018) & Mark Ingram (Ingram, 2011)
+ * @version 02/05/2021
+ */
 public class MyLocationActivity extends AppCompatActivity
 {
-    //// FIELD VARIABLES
+    //--------------------FIELD VARIABLES--------------------//
 
     /// DECIMAL FORMATTER, USED FOR SHORTENING DOUBLES
 
@@ -145,9 +150,14 @@ public class MyLocationActivity extends AppCompatActivity
     // DECLARE a String, name it '_crrntUser':
     private String _crrntUser;
 
-    //// OVERRIDE METHODS
+    //--------------------OVERRIDE METHODS--------------------//
 
-    // Called when activity is first loaded
+    /**
+     * METHOD: Called when class is first loaded to initialise objects
+     * @param savedInstanceState: Used to restore user back to previous state in event of error when changing activity
+     *
+     * Learned from Worksheet 8,9,10 (Bowers, 2021)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -253,7 +263,11 @@ public class MyLocationActivity extends AppCompatActivity
         Toast.makeText(getApplicationContext(), "Hold Down on Location to Store!", Toast.LENGTH_LONG).show();
     }
 
-    // Called constantly, works as an update loop
+    /**
+     * METHOD: Called constantly when class is in use by an activity
+     *
+     * Learned from Worksheet 8 (Bowers, 2021)
+     */
     @Override
     protected void onResume()
     {
@@ -276,7 +290,11 @@ public class MyLocationActivity extends AppCompatActivity
         _crrntUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    // Called when activity is not in use
+    /**
+     * METHOD: Called when class is not in use by an activity
+     *
+     * Learned from Worksheet 8 (Bowers, 2021)
+     */
     @Override
     protected void onPause()
     {
@@ -299,7 +317,12 @@ public class MyLocationActivity extends AppCompatActivity
         }
     }
 
-    // Called to display notification
+    /**
+     * METHOD: Creates new Intent to display notification to user
+     * @param intent: Reference to new intent from app
+     *
+     * Learned from Worksheet 9 (Bowers, 2021)
+     */
     @Override
     protected void onNewIntent(Intent intent)
     {
@@ -322,7 +345,14 @@ public class MyLocationActivity extends AppCompatActivity
         }
     }
 
-    // Called to check if user has given permission for location
+    /**
+     * METHOD: Called to check if user has given permission to access location
+     * @param requestCode: Used to make sure app has permission to access user location
+     * @param permissions: Array of permissions that the app requires from user
+     * @param grantResults: Array of results to let app access user's location
+     *
+     * Learned from Worksheet 8 (Bowers, 2021)
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
     {
@@ -346,9 +376,12 @@ public class MyLocationActivity extends AppCompatActivity
     }
 
 
-    //// PUBLIC METHODS
+    //--------------------PUBLIC METHODS--------------------//
 
-    // Called when Return To Menu Button is clicked
+    /**
+     * METHOD: Opens MainMenuActvity, used by Back Button from Main Menu Screen
+     * @param view: Allows use of method from exterior view object
+     */
     public void onReturnToMenuClick(View view)
     {
         // DECLARE an Intent, name it '_rtnToMenuIntent':
@@ -359,26 +392,30 @@ public class MyLocationActivity extends AppCompatActivity
     }
 
 
-    //// PRIVATE METHODS
+    //--------------------PRIVATE METHODS--------------------//
 
-    // Begin tracking user's location
+    /**
+     * METHOD: Starts tracking user's location
+     *
+     * Learned from Worksheet 8 (Bowers, 2021)
+     */
     private void startTracking()
     {
-        if (_trackingEnabled)
+        if (_trackingEnabled) // IF tracking of user is enabled
         {
             // CHECK _permission's state:
             _permission = ContextCompat.checkSelfPermission(getApplicationContext(),
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED;
 
-            if (_permission)
+            if (_permission) // IF user has given location permission
             {
                 Log.d("MyLocation", "Permission already granted!");
 
                 // CALL updateLocation, to request location updates:
                 updateLocation();
             }
-            else if (!_permission)
+            else if (!_permission) // IF user has NOT given location permission
             {
                 Log.d("MyLocation", "Requesting Permission!");
 
@@ -391,6 +428,11 @@ public class MyLocationActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * METHOD: Updates user's location on map view
+     *
+     * Learned from Worksheet 8 (Bowers, 2021)
+     */
     // Called to update location of user
     @SuppressLint("MissingPermission")
     private void updateLocation()
@@ -409,7 +451,11 @@ public class MyLocationActivity extends AppCompatActivity
         }
     }
 
-    // Adds user's current location to map
+    /**
+     * METHOD: Modifies marker location of user and removes old marker
+     *
+     * Learned from Worksheet 8 (Bowers, 2021)
+     */
     private void createLocListener()
     {
         // INSTANTIATE _locnListener as new LocationListener():
@@ -436,8 +482,10 @@ public class MyLocationActivity extends AppCompatActivity
                 // SET marker position as the same as _crrntLocn:
                 _crrntLocnMrkr.setPosition(_crrntLocn);
 
+                // SET title of marker:
                 _crrntLocnMrkr.setTitle("Current Location");
 
+                // SET description of marker:
                 _crrntLocnMrkr.setSubDescription("Longitude: " + locn.getLongitude() + ". Latitude: " + locn.getLatitude() + ".");
 
                 // CALL invalidate() to map is redrawn with a marker:
@@ -496,6 +544,16 @@ public class MyLocationActivity extends AppCompatActivity
         };
     }
 
+    /**
+     * METHOD: Creates a notification to be displayed to the user about their nearby task
+     * @param storedTask: Task object which contains details such as title, description and location values
+     * @param dist: Current distance of user from their task
+     * @return Notification: Used for displaying an intent to the user, so that they turn task notifications on or off
+     *
+     * Learned from Worksheet 9 (Bowers, 2021)
+     * learned how to apply Big Picture Style to a notification (CodingInFlow, 2018)
+     * Learned how to convert Uri file path to a Bitmap (Ingram, 2011)
+     */
     // Creates notification to alert user when close to a location
     private Notification createNotification(Task storedTask, double dist)
     {
@@ -517,12 +575,11 @@ public class MyLocationActivity extends AppCompatActivity
         Bitmap _bmImg = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher_foreground);
 
         /*
-
         // TRY creation of Bitmap image, getBitmap() must be tried for an exception
         try
         {
             // INITIALISE _bmImg, name it '_bmImg', store reference to storedTask's image:
-            _bmImg = MediaStore.Images.Media.getBitmap(this.getContentResolver() , Uri.parse(storedTask.image)); // Requires Local image to display location, online image is different (Privacy)
+            _bmImg = MediaStore.Images.Media.getBitmap(this.getContentResolver() , Uri.parse(storedTask.image)); // Requires Local image to display location, online image is different (Ingram, 2011)
 
             Log.d("URI BITMAP", _bmImg.toString());
         }
@@ -531,7 +588,6 @@ public class MyLocationActivity extends AppCompatActivity
             // PRINT stack trace of exception to console:
             e.printStackTrace();
         }
-
         */
 
         // INSTANTIATE _notification as new NotificationCompat.Builder(),
@@ -542,7 +598,7 @@ public class MyLocationActivity extends AppCompatActivity
                 .setContentText("Task Description: " + storedTask.description) // SET context for notification
                 .setContentIntent(_pendingIntent) // SET ContentIntent to _pendingIntent
                 .setLargeIcon(_bmImg) // SET Large Icon of notification
-                .setStyle(new NotificationCompat.BigPictureStyle() // CREATE BigPictureStyle() to allow user to see picture in detail
+                .setStyle(new NotificationCompat.BigPictureStyle() // CREATE BigPictureStyle() to allow user to see picture in detail (CodingInFlow, 2018)
                         .bigPicture(_bmImg) // SET image shown when notification is enlarged
                         .bigLargeIcon(null)) // SET as null to not show image twice*/
                 .setAutoCancel(true) // SET auto cancel to true, so user can dismiss notification when interacting with notification
@@ -552,6 +608,11 @@ public class MyLocationActivity extends AppCompatActivity
         return _notification;
     }
 
+    /**
+     * METHOD: Creates Notification channel, so that user can be alerted with a notification when near task
+     *
+     * Learned from Worksheet 9 (Bowers, 2021)
+     */
     // Creates notification channel to alert user
     private void createNotificationChannel()
     {
@@ -571,6 +632,12 @@ public class MyLocationActivity extends AppCompatActivity
         _notificationManager.createNotificationChannel(_channel);
     }
 
+    /**
+     * METHOD: Creates dialog to display to user allowing them to choose whether they would like more notifications for a task
+     * @param storedTask: Task object which contains details such as title, description and location values
+     *
+     * Learned from Worksheet 9 (Bowers, 2021)
+     */
     private void showNotificationDialog(Task storedTask)
     {
         // SET _notificationActive to false, as user has dismissed notification:
@@ -629,7 +696,11 @@ public class MyLocationActivity extends AppCompatActivity
         _alertDialog.show(); // Display AlertDialog
     }
 
-    // Listens for changes to Firestore in 'tasks' collection
+    /**
+     * METHOD: Used to display all tasks and their locations on the map view, modifies when new task is added to Firestore
+     *
+     * Learned from Worksheet 10 (Bowers, 2021)
+     */
     private void listenForFirestoreChngTask()
     {
         // DECLARE & INSTANTIATE a CollisionReference, name it '_collection', get reference to 'tasks' directory:
@@ -709,7 +780,11 @@ public class MyLocationActivity extends AppCompatActivity
         });
     }
 
-    // Listens for changes to Firestore in 'locations' collection
+    /**
+     * METHOD: Used to display all locations on the map view, modifies when new location is added to Firestore
+     *
+     * Learned from Worksheet 10 (Bowers, 2021)
+     */
     private void listenForFirestoreChngLoc()
     {
         // DECLARE & INSTANTIATE a CollisionReference, name it '_collection', get reference to 'locations' directory:
@@ -772,6 +847,11 @@ public class MyLocationActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * METHOD: Used to display all tasks and their locations on the map view, modifies when new task is added to Firestore
+     *
+     * Learned from Worksheet 10 (Bowers, 2021)
+     */
     private void createMapEventsOverlay()
     {
         // DECLARE & INSTANTIATE a MapEventsOverlay, name it '_mapEventsOverlay', listens for user touch events:
@@ -804,6 +884,11 @@ public class MyLocationActivity extends AppCompatActivity
         _mapView.getOverlays().add(_mapEventsOverlay);
     }
 
+    /**
+     * METHOD: Displays a dialog which allows a user to create a location to be store in the Firestore
+     *
+     * Learned from Worksheet 10 (Bowers, 2021)
+     */
     private void addNewLocationDialog(GeoPoint geoPoint)
     {
         Log.d("MyLocation", "Long at " + geoPoint);

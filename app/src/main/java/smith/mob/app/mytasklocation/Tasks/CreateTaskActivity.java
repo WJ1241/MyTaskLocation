@@ -40,10 +40,14 @@ import smith.mob.app.mytasklocation.Location.MyLocationActivity;
 import smith.mob.app.mytasklocation.Location.StoredLocation;
 import smith.mob.app.mytasklocation.R;
 
-
+/**
+ * Class used to display Task Creation screen
+ * @author William Smith, Christopher Bowers (Bowers, 2021), George John (John, 2018) & Google (Google, 2021)
+ * @version 02/05/2021
+ */
 public class CreateTaskActivity extends AppCompatActivity
 {
-    //// Instance Variables
+    //--------------------FIELD VARIABLES--------------------//
 
     // DECLARE EditText variables to access views in XML:
     private EditText _titleView;
@@ -78,8 +82,12 @@ public class CreateTaskActivity extends AppCompatActivity
     // DECLARE a String, name it '_crrntUser':
     private String _crrntUser;
 
+    //--------------------OVERRIDE METHODS--------------------//
 
-    // OnCreate runs when the activity is created:
+    /**
+     * METHOD: Called when class is first loaded to initialise objects
+     * @param savedInstanceState: Used to restore user back to previous state in event of error when changing activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -110,6 +118,14 @@ public class CreateTaskActivity extends AppCompatActivity
         getLocations();
     }
 
+    /**
+     * METHOD: Called to get result of camera activity
+     * @param requestCode: code for user's given permission
+     * @param resultCode: code to know if user has given permission
+     * @param data: Intent from camera activity
+     *
+     * Learned from Worksheet 5 (Bowers, 2021)
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -123,8 +139,14 @@ public class CreateTaskActivity extends AppCompatActivity
         }
     }
 
-    //// PUBLIC METHODS
+    //--------------------PUBLIC METHODS--------------------//
 
+    /**
+     * METHOD: Saves created task within local Room database and Firestore
+     * @param view: Allows use of method from exterior view object
+     *
+     * Learned from Worksheets 3,4,5 (Bowers, 2021)
+     */
     // Used when Save buttons are clicked:
     public void onSaveClick(View view) {
         Log.d("ToDoApp", "onSaveClick");
@@ -213,6 +235,12 @@ public class CreateTaskActivity extends AppCompatActivity
         finish();
     }
 
+    /**
+     * METHOD: Allows user to take picture and return value back to app to use within task creation
+     * @param view: Allows use of method from exterior view object
+     *
+     * Learned from Worksheet 5 (Bowers, 2021)
+     */
     // Used when camera elements are interacted with
     public void onCameraClick(View view)
     {
@@ -238,6 +266,10 @@ public class CreateTaskActivity extends AppCompatActivity
 
     }
 
+    /**
+     * METHOD: Opens MyLocationActivity, used by Create Location Button from CreateTaskActivity
+     * @param view: Allows use of method from exterior view object
+     */
     // Called when Open Map button is clicked
     public void onOpenMapBttnClick(View view)
     {
@@ -248,9 +280,11 @@ public class CreateTaskActivity extends AppCompatActivity
         startActivity(_openMapIntent);
     }
 
-    //// PRIVATE METHODS
+    //--------------------PRIVATE METHODS--------------------//
 
-    // Gets all views within current activity, stores them for modification:
+    /**
+     * METHOD: Gets all views within current activity, stores them for modification:
+     */
     private void getViews()
     {
         //--------------------EditText--------------------//
@@ -272,7 +306,11 @@ public class CreateTaskActivity extends AppCompatActivity
         _taskImageView.setImageURI(_imageUri);
     }
 
-    // Called when Spinner values need updating
+    /**
+     * METHOD: Updates values in Spinner view in activity XML
+     *
+     * Learned how to create Array Adapters and use them to list items in a spinner (John, 2018)
+     */
     private void spinnerValueUpdate()
     {
         for (String locnName : _storedLocns.keySet()) // FOR every location name in _storedLocns keys
@@ -293,7 +331,11 @@ public class CreateTaskActivity extends AppCompatActivity
         _spinner.setAdapter(_stringAdapter);
     }
 
-    // Called to store locations ready for spinner
+    /**
+     * METHOD: Gets documents from 'locations' collection in Firestore, stores them locally to use in task spinner
+     *
+     * Learned from Firebase Documentation (Google, 2021)
+     */
     private void getLocations()
     {
         // GET collection 'locations' from Firestore:

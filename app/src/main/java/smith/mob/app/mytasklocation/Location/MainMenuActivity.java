@@ -20,10 +20,12 @@ import smith.mob.app.mytasklocation.Tasks.TaskListActivity;
 
 /**
  * Class used to display Main Menu screen once a user has signed into Firebase
+ * @author William Smith
+ * @version 02/05/2021
  */
 public class MainMenuActivity extends AppCompatActivity
 {
-    //// FIELD VARIABLES
+    //--------------------FIELD VARIABLES--------------------//
 
     // DECLARE a TextView, name it '_displayNameView':
     private TextView _displayNameView;
@@ -31,7 +33,7 @@ public class MainMenuActivity extends AppCompatActivity
     // DECLARE a FirebaseUser, name it '_crrntUser':
     private FirebaseUser _crrntUser;
 
-    //// PROTECTED METHODS
+    //--------------------OVERRIDE METHODS--------------------//
 
     /**
      * METHOD: Called when class is first loaded to initialise objects
@@ -57,12 +59,11 @@ public class MainMenuActivity extends AppCompatActivity
     }
 
 
-    //// PUBLIC METHODS
+    //--------------------PUBLIC METHODS--------------------//
 
     /**
      * METHOD: Signs User out of Firebase, used by Sign Out Button from Main Menu Screen
      * @param view: Allows use of method from exterior view object
-     * @return void
      */
     public void onSignOutBttnClick(View view)
     {
@@ -86,7 +87,6 @@ public class MainMenuActivity extends AppCompatActivity
     /**
      * METHOD: Opens MyLocationActivity, used by Open Map Button from Main Menu Screen
      * @param view: Allows use of method from exterior view object
-     * @return void
      */
     public void onOpenMapBttnClick(View view)
     {
@@ -99,9 +99,8 @@ public class MainMenuActivity extends AppCompatActivity
 
 
     /**
-     * METHOD: Opens ToDoListActi, used by Open Map Button from Main Menu Screen
+     * METHOD: Opens TaskListActivity, used by Open Map Button from Main Menu Screen
      * @param view: Allows use of method from exterior view object
-     * @return void
      */
     public void onTasksBttnClick(View view)
     {
@@ -117,11 +116,10 @@ public class MainMenuActivity extends AppCompatActivity
 
     /**
      * METHOD: Sets Value of Display Name view to display current user's name
-     * @return void
      */
     private void setDisplayNameView()
     {
-        // Stores _displayNameView values as EditText:
+        // STORE _displayNameView values as EditText:
         _displayNameView = findViewById(R.id.displayNameView);
 
         // SET text field to display user's name:
@@ -130,7 +128,6 @@ public class MainMenuActivity extends AppCompatActivity
 
     /**
      * METHOD: Opens SignInActivity, returns user to first screen to fully sign out
-     * @return void
      */
     // Called when user signs out of Firebase Auth UI
     private void goToSignInScreen()
@@ -138,8 +135,10 @@ public class MainMenuActivity extends AppCompatActivity
         // Log to test button functionality
         Log.d("ToDoAPP", "goToSignInScreen");
 
-        // DECLARE an Intent, name it '_signInIntent', starts ToDoActivity:
+        // DECLARE an Intent, name it '_signInIntent', starts SignInActivity:
         Intent _signInIntent = new Intent(this, SignInActivity.class);
+
+        // Call startActivity(), passing an Intent as a parameter:
         startActivity(_signInIntent);
     }
 }

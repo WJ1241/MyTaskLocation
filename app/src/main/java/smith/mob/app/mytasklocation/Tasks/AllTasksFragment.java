@@ -17,16 +17,15 @@ import java.util.List;
 import smith.mob.app.mytasklocation.R;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link AllTasksFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Class which creates a fragment that displays all tasks in TasksDB
+ * @author William Smith & Christopher Bowers (Bowers 2021)
+ * @version 02/05/2021
  */
 public class AllTasksFragment extends Fragment
 {
+    //--------------------CUSTOM CODE--------------------//
 
-    //// CUSTOM CODE
-
-    //// FIELD VARIABLES
+    //------------------FIELD VARIABLES--------------------//
 
     // DECLARE a RecyclerView, call it '_recyclerView':
     RecyclerView _recyclerView;
@@ -38,8 +37,15 @@ public class AllTasksFragment extends Fragment
     TasksDB _db;
 
 
-    //// OVERRIDE METHODS
+    //--------------------OVERRIDE METHODS--------------------//
 
+    /**
+     * METHOD: Called when AllTasksFragment view is displayed on screen
+     * @param view: Gets reference to fragment view from activity XML
+     * @param savedInstanceState: Used to restore user back to previous state in event of error when changing activity
+     *
+     * Learned from Worksheet 7 (Bowers, 2021)
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
@@ -90,7 +96,11 @@ public class AllTasksFragment extends Fragment
         _itemTouchHelper.attachToRecyclerView(_recyclerView);
     }
 
-
+    /**
+     * METHOD: Called constantly when class is in use by an activity
+     *
+     * Learned from Worksheet 7 (Bowers, 2021)
+     */
     @Override
     public void onResume()
     {
@@ -116,9 +126,9 @@ public class AllTasksFragment extends Fragment
 
 
 
-    //// BOILER PLATE CODE
+    //--------------------BOILER PLATE CODE--------------------//
 
-    //// FIELD VARIABLES
+    //--------------------FIELD VARIABLES--------------------//
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
