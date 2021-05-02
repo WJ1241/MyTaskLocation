@@ -16,10 +16,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import smith.mob.app.mytasklocation.R;
-import smith.mob.app.mytasklocation.Tasks.ToDoListActivity;
+import smith.mob.app.mytasklocation.Tasks.TaskListActivity;
 
-public class MainMenuActivity extends AppCompatActivity {
-
+/**
+ * Class used to display Main Menu screen once a user has signed into Firebase
+ */
+public class MainMenuActivity extends AppCompatActivity
+{
     //// FIELD VARIABLES
 
     // DECLARE a TextView, name it '_displayNameView':
@@ -30,6 +33,10 @@ public class MainMenuActivity extends AppCompatActivity {
 
     //// PROTECTED METHODS
 
+    /**
+     * METHOD: Called when class is first loaded to initialise objects
+     * @param savedInstanceState: Used to restore user back to previous state in event of error when changing activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -52,6 +59,11 @@ public class MainMenuActivity extends AppCompatActivity {
 
     //// PUBLIC METHODS
 
+    /**
+     * METHOD: Signs User out of Firebase, used by Sign Out Button from Main Menu Screen
+     * @param view: Allows use of method from exterior view object
+     * @return void
+     */
     public void onSignOutBttnClick(View view)
     {
         // GET instance of AuthUI:
@@ -71,7 +83,11 @@ public class MainMenuActivity extends AppCompatActivity {
                 });
     }
 
-    // Called when Open Map button is clicked
+    /**
+     * METHOD: Opens MyLocationActivity, used by Open Map Button from Main Menu Screen
+     * @param view: Allows use of method from exterior view object
+     * @return void
+     */
     public void onOpenMapBttnClick(View view)
     {
         // DECLARE an Intent, name it '_openMapIntent':
@@ -81,11 +97,16 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(_openMapIntent);
     }
 
-    // Called when Tasks button is clicked
+
+    /**
+     * METHOD: Opens ToDoListActi, used by Open Map Button from Main Menu Screen
+     * @param view: Allows use of method from exterior view object
+     * @return void
+     */
     public void onTasksBttnClick(View view)
     {
         // DECLARE an Intent, name it '_tasksIntent':
-        Intent _tasksIntent  = new Intent(this, ToDoListActivity.class);
+        Intent _tasksIntent  = new Intent(this, TaskListActivity.class);
 
         // Call startActivity(), passing an Intent as a parameter:
         startActivity(_tasksIntent);
@@ -94,7 +115,10 @@ public class MainMenuActivity extends AppCompatActivity {
 
     //// PRIVATE METHODS
 
-    // Gets all views within current activity, stores them for modification:
+    /**
+     * METHOD: Sets Value of Display Name view to display current user's name
+     * @return void
+     */
     private void setDisplayNameView()
     {
         // Stores _displayNameView values as EditText:
@@ -104,6 +128,10 @@ public class MainMenuActivity extends AppCompatActivity {
         _displayNameView.setText(_crrntUser.getDisplayName());
     }
 
+    /**
+     * METHOD: Opens SignInActivity, returns user to first screen to fully sign out
+     * @return void
+     */
     // Called when user signs out of Firebase Auth UI
     private void goToSignInScreen()
     {
@@ -114,6 +142,4 @@ public class MainMenuActivity extends AppCompatActivity {
         Intent _signInIntent = new Intent(this, SignInActivity.class);
         startActivity(_signInIntent);
     }
-
-
 }

@@ -16,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import smith.mob.app.mytasklocation.Location.MainMenuActivity;
 import smith.mob.app.mytasklocation.R;
 
-public class ToDoListActivity extends AppCompatActivity
+public class TaskListActivity extends AppCompatActivity
 {
     // FIELD VARIABLES
 
@@ -107,7 +107,7 @@ public class ToDoListActivity extends AppCompatActivity
         Log.d("ToDoAPP", "onNewTaskClicked");
 
         // DECLARE an Intent, call it '_taskIntent', starts ToDoActivity:
-        Intent _taskIntent = new Intent(this, ToDoActivity.class);
+        Intent _taskIntent = new Intent(this, CreateTaskActivity.class);
         startActivity(_taskIntent);
     }
 

@@ -41,7 +41,7 @@ import smith.mob.app.mytasklocation.Location.StoredLocation;
 import smith.mob.app.mytasklocation.R;
 
 
-public class ToDoActivity extends AppCompatActivity
+public class CreateTaskActivity extends AppCompatActivity
 {
     //// Instance Variables
 

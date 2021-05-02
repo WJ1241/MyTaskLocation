@@ -21,7 +21,8 @@ import smith.mob.app.mytasklocation.R;
  * Use the {@link AllTasksFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AllTasksFragment extends Fragment {
+public class AllTasksFragment extends Fragment
+{
 
     //// CUSTOM CODE
 

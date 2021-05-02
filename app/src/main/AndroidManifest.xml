@@ -28,10 +28,10 @@
 
         <!-- Task Activities -->
 
-        <activity android:name=".Tasks.ToDoListActivity">
+        <activity android:name=".Tasks.TaskListActivity">
         </activity>
 
-        <activity android:name=".Tasks.ToDoActivity">
+        <activity android:name=".Tasks.CreateTaskActivity">
         </activity>
 
         <!-- Location Activities -->
