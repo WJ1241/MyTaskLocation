@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MyTask&amp;Location</string>
+    <string name="title">Title</string>
+    <string name="task_title">Task Title</string>
+    <string name="description">Description</string>
+    <string name="task_description">Task Description</string>
+    <string name="due_date">Due Date</string>
+    <string name="hint_date">dd/mm/yyyy</string>
+    <string name="due_time">Due Time</string>
+    <string name="hint_time">00:00 (24 hour clock)</string>
+    <string name="camera_button">cameraButton</string>
+    <string name="image">IMAGE</string>
+    <string name="save">SAVE</string>
+    <string name="newtaskbutton">newTaskButton</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

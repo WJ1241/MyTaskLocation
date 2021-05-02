@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="smith.mob.app.mytasklocation">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyTaskLocation">
+
+        <!-- FireBase Activities -->
+
+        <activity android:name=".Location.SignInActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Location.MainMenuActivity">
+        </activity>
+
+        <!-- Task Activities -->
+
+        <activity android:name=".Tasks.ToDoListActivity">
+        </activity>
+
+        <activity android:name=".Tasks.ToDoActivity">
+        </activity>
+
+        <!-- Location Activities -->
+
+        <activity android:name=".Location.MyLocationActivity" android:launchMode="singleTop">
+        </activity>
+
+        <!-- Providers -->
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="imgprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths">
+            </meta-data>
+        </provider>
+
+
+    </application>
+
+</manifest>
