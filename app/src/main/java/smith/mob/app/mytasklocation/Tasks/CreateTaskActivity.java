@@ -145,7 +145,7 @@ public class CreateTaskActivity extends AppCompatActivity
      * METHOD: Saves created task within local Room database and Firestore
      * @param view: Allows use of method from exterior view object
      *
-     * Learned from Worksheets 3,4,5 (Bowers, 2021)
+     * Learned from Worksheets 2,3,4,5 (Bowers, 2021)
      */
     // Used when Save buttons are clicked:
     public void onSaveClick(View view) {
