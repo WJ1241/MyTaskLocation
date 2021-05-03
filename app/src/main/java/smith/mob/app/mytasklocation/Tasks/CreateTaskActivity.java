@@ -1,7 +1,5 @@
 package smith.mob.app.mytasklocation.Tasks;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,11 +7,9 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -220,11 +216,8 @@ public class CreateTaskActivity extends AppCompatActivity
 
         //----------------FirebaseStorage----------------//
 
-        // DECLARE & ASSIGN a String, name it '_onlineImgPath', give default image online, prevents users from accessing private images:
-        String _onlineImgPath = "android.resource://smith.mob.app.mytasklocation/2131165344";
-
         // DECLARE a Task, name it '_fbTask', used to store task details in Firebase:
-        Task _fbTask = new Task(_task.title, _task.description, _task.locName, _task.longitude, _task.latitude, _onlineImgPath, _crrntUser);
+        Task _fbTask = new Task(_task.title, _task.description, _task.locName, _task.longitude, _task.latitude, _task.image, _crrntUser);
 
         _fsDb.collection("tasks")
                 .document(_task.title + "_" + _crrntUser)
@@ -300,7 +293,7 @@ public class CreateTaskActivity extends AppCompatActivity
         _taskImageView = findViewById(R.id.taskImageView);
 
         // ASSIGNMENT, get resource of default logo used before user created image:
-        _imageUri = Uri.parse("android.resource://smith.mob.app.mytasklocation/" + R.drawable.ic_launcher_foreground);
+        _imageUri = Uri.parse("android.resource://smith.mob.app.mytasklocation/" + R.drawable.ic_test_image);
 
         // SET default image for user if they do not take picture:
         _taskImageView.setImageURI(_imageUri);

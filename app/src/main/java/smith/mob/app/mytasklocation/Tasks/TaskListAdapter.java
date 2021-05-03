@@ -142,7 +142,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
            @Override
            public void run()
            {
-               if (_task.userID.equals(_crrntUser)) // IF task User ID matches crrnt user, prevents other users from deleting task
+               if (_task.userID.equals(_crrntUser)) // IF task User ID matches current user, prevents other users from deleting task
                {
                    // CALL delete method from TasksDAO interface:
                    _db.tasksDAO().deleteTask(_task);
@@ -169,8 +169,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                }
            }
         });
-
-
     }
 
     //--------------------OVERRIDE METHODS--------------------//
@@ -235,7 +233,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                     @Override
                     public void run()
                     {
-                        if (_task.userID.equals(_crrntUser)) // IF task User ID matches crrnt user, prevents other users from deleting task
+                        if (_task.userID.equals(_crrntUser)) // IF task User ID matches current user, prevents other users from deleting task
                         {
                             // CALL update method from TasksDAO interface:
                             _db.tasksDAO().updateTask(_task);

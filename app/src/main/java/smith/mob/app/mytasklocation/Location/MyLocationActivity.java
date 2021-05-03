@@ -15,7 +15,9 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -45,6 +47,7 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -571,24 +574,24 @@ public class MyLocationActivity extends AppCompatActivity
         Notification _notification;
 
         // DECLARE a Bitmap, name it '_bmImg':
-        // Issue with trying to get image from Firebase, could not find file path required, need a default image to demonstrate notification displaying an image:
-        Bitmap _bmImg = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_launcher_foreground);
+        // Default Image if user did not take picture:
+        Bitmap _bmImg = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_test_image);
 
-        /*
         // TRY creation of Bitmap image, getBitmap() must be tried for an exception
         try
         {
-            // INITIALISE _bmImg, name it '_bmImg', store reference to storedTask's image:
-            _bmImg = MediaStore.Images.Media.getBitmap(this.getContentResolver() , Uri.parse(storedTask.image)); // Requires Local image to display location, online image is different (Ingram, 2011)
-
-            Log.d("URI BITMAP", _bmImg.toString());
+            if (storedTask.image != null) // IF there is an image path associated with a task
+            {
+                // INITIALISE _bmImg, name it '_bmImg', store reference to storedTask's image:
+                _bmImg = MediaStore.Images.Media.getBitmap(this.getContentResolver() , Uri.parse(storedTask.image)); // Requires Local image to display location, online image is different (Ingram, 2011)
+            }
         }
         catch (IOException e)
         {
             // PRINT stack trace of exception to console:
             e.printStackTrace();
         }
-        */
+
 
         // INSTANTIATE _notification as new NotificationCompat.Builder(),
         // setting details such as icons, title and description:
@@ -597,11 +600,11 @@ public class MyLocationActivity extends AppCompatActivity
                 .setContentTitle("My Task & Location Update: " + storedTask.title) // SET title for task
                 .setContentText("Task Description: " + storedTask.description) // SET context for notification
                 .setContentIntent(_pendingIntent) // SET ContentIntent to _pendingIntent
+                .setAutoCancel(true) // SET auto cancel to true, so user can dismiss notification when interacting with notification
                 .setLargeIcon(_bmImg) // SET Large Icon of notification
                 .setStyle(new NotificationCompat.BigPictureStyle() // CREATE BigPictureStyle() to allow user to see picture in detail (CodingInFlow, 2018)
                         .bigPicture(_bmImg) // SET image shown when notification is enlarged
                         .bigLargeIcon(null)) // SET as null to not show image twice*/
-                .setAutoCancel(true) // SET auto cancel to true, so user can dismiss notification when interacting with notification
                 .build(); // CONFIRM all settings set above
 
         // RETURN value of _notification:
